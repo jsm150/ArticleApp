@@ -37,12 +37,9 @@
     [Inject]
     public NavigationManager Manager { get; set; }
 
-    private DeleteModalParameterContainer _container = new();
-
     private Article _model = new();
 
     private Article _deleteModel = new();
-
 
     protected override async Task OnInitializedAsync()
     {
