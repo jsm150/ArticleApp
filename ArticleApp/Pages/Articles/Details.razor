@@ -8,18 +8,18 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <label for="id">ID: </label> @Model.Id
+                <label for="id">ID: </label> @_model.Id
             </div>
             <div class="form-group">
-                <label for="title">Title: </label> @Model.Title
+                <label for="title">Title: </label> @_model.Title
             </div>
             <div class="form-group">
                 <label for="title">Content: </label> 
                 <hr />
-                @Model.Content
+                @_model.Content
             </div>
             <div class="form-group">
-                <a href="/Articles/edit/@Model.Id" class="btn btn-primary">수정</a>
+                <a href="/Articles/edit/@_model.Id" class="btn btn-primary">수정</a>
                 <button @onclick="btnDelete_Click" class="btn btn-danger">삭제</button>
                 <a href="/Articles" class="btn btn-secondary">취소</a>
             </div>
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<Delete Container="_container" OnChanged="@(() => Manager.NavigateTo("/Articles"))"/>
+<Delete Model="_deleteModel" OnChanged="@(() => Manager.NavigateTo("/Articles"))"/>
 
 @code {
     [Parameter]
@@ -39,16 +39,18 @@
 
     private DeleteModalParameterContainer _container = new();
 
-    private Article Model = new();
+    private Article _model = new();
+
+    private Article _deleteModel = new();
+
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await DbContext.Articles.FindAsync(Id);
+        _model = await DbContext.Articles.FindAsync(Id);
     }
 
     protected void btnDelete_Click()
     {
-        _container.IsDeleteModalOpen = true;
-        _container.Model = Model;
+        _deleteModel = _model;
     }
 }

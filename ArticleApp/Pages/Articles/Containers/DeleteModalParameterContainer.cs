@@ -9,7 +9,7 @@ namespace ArticleApp.Pages.Articles
 {
     public class DeleteModalParameterContainer
     {
-        public bool IsDeleteModalOpen { get; set; }
+        public bool IsDeleteModalOpen { get; set; } = true;
         public Article Model { get; set; }
     }
 }

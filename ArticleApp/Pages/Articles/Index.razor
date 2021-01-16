@@ -41,25 +41,25 @@ else
         </tbody>
     </table>
 }
-<Delete Container="_container" OnChanged="OnInitializedAsync"></Delete>
+<Delete Model="_deleteModel" OnChanged="OnInitializedAsync"></Delete>
 
 @code {
 
     [Inject]
     public ArticleAppDbContext DbContext { get; set; }
 
-    private DeleteModalParameterContainer _container = new();
+    private Article _deleteModel = new();
 
     private List<Article> _articles;
 
     protected override async Task OnInitializedAsync()
     {
         _articles = await DbContext.Articles.ToListAsync();
+        _deleteModel = new();
     }
 
     protected void btnDelete_Click(Article model)
     {
-        _container.IsDeleteModalOpen = true;
-        _container.Model = model;
+        _deleteModel = model;
     }
 }

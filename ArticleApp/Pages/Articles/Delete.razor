@@ -1,31 +1,30 @@
-﻿@if (Container.Model != null)
-{
-    <MatDialog @bind-IsOpen="@Container.IsDeleteModalOpen">
-        <MatDialogTitle>@(Container.Model.Id)번 게시물</MatDialogTitle>
-        <MatDialogContent>
-            <p>정말로 삭제하시겠습니까??</p>
-        </MatDialogContent>
-        <MatDialogActions>
-            <MatButton OnClick="@(() => Container.IsDeleteModalOpen = false)">취소</MatButton>
-            <MatButton OnClick="@btnDelete_Click">삭제</MatButton>
-        </MatDialogActions>
-    </MatDialog>
-}
+﻿<MatDialog @bind-IsOpen="IsDeleteModalOpen">
+    <MatDialogTitle>@(Model.Id)번 게시물</MatDialogTitle>
+    <MatDialogContent>
+        <p>정말로 삭제하시겠습니까??</p>
+    </MatDialogContent>
+    <MatDialogActions>
+        <MatButton OnClick="@(() => Model = new())">취소</MatButton>
+        <MatButton OnClick="@btnDelete_Click">삭제</MatButton>
+    </MatDialogActions>
+</MatDialog>
 
 @code {
-    [Parameter]
-    public DeleteModalParameterContainer Container { get; set; }
-
     [Inject]
     public ArticleAppDbContext DbContext { get; set; }
 
     [Parameter]
+    public Article Model { get; set; }
+
+    [Parameter]
     public EventCallback OnChanged { get; set; }
+
+    private bool IsDeleteModalOpen { get => Model.Id != 0; set => _ = value; }
 
     protected async Task btnDelete_Click()
     {
-        Container.IsDeleteModalOpen = false;
-        DbContext.Articles.Remove(Container.Model);
+        DbContext.Articles.Remove(Model);
+        Model = new();
         await DbContext.SaveChangesAsync();
         await OnChanged.InvokeAsync();
     }
