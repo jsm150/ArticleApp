@@ -2,7 +2,36 @@
 
 <h3>Details</h3>
 
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="id">ID: </label> @Model.Id
+            </div>
+            <div class="form-group">
+                <label for="title">Title: </label> @Model.Title
+            </div>
+            <div class="form-group">
+                <a href="/Articles/edit/@Model.Id" class="btn btn-primary">수정</a>
+                <a href="/Articles/Delete/@Model.Id" class="btn btn-danger">삭제</a>
+                <a href="/Articles" class="btn btn-secondary">취소</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 @code {
     [Parameter]
     public int Id { get; set; }
+    [Inject]
+    public ArticleAppDbContext DbContext { get; set; }
+
+    private Article Model = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await DbContext.Articles.FindAsync(Id);
+    }
 }

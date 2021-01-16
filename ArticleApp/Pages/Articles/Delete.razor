@@ -2,7 +2,35 @@
 
 <h3>Delete</h3>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <EditForm Model="Model">
+                <DataAnnotationsValidator /><ValidationSummary />
+                <div class="form-group">
+                    <label for="Title">Title</label>
+                    <InputText id="Title" class="form-control" placeholder="Enter Title" @bind-Value="Model.Title" />
+                    <ValidationMessage For="() => Model.Title" class="form-text text-muted" />
+                </div>
+                <button type="submit" class="btn btn-primary">등록</button>
+                <a href="/Articles" class="btn btn-secondary">취소</a>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
 @code {
     [Parameter]
     public int Id { get; set; }
+    [Inject]
+    public NavigationManager Navigation { get; set; }
+    [Inject]
+    public ArticleAppDbContext DbContext { get; set; }
+
+    private Article Model = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await DbContext.Articles.FindAsync(Id);
+    }
 }
