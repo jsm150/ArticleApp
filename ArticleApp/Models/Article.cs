@@ -22,6 +22,12 @@ namespace ArticleApp.Models
         [Required(ErrorMessage = "제목을 입력해 주세요.")]
         public string Title { get; set; }
 
+        /// <summary>
+        /// 내용
+        /// </summary>
+        [Required(ErrorMessage = "내용을 입력해 주세요.")]
+        public string Content { get; set; }
+
         public string CreatedBy { get; set; }
         public DateTime Created { get; set; }
         public string ModifiedBy { get; set; }

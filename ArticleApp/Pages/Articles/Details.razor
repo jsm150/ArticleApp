@@ -14,6 +14,11 @@
                 <label for="title">Title: </label> @Model.Title
             </div>
             <div class="form-group">
+                <label for="title">Content: </label> 
+                <hr />
+                @Model.Content
+            </div>
+            <div class="form-group">
                 <a href="/Articles/edit/@Model.Id" class="btn btn-primary">수정</a>
                 <a href="/Articles/Delete/@Model.Id" class="btn btn-danger">삭제</a>
                 <a href="/Articles" class="btn btn-secondary">취소</a>
