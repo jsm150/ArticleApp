@@ -20,23 +20,35 @@
             </div>
             <div class="form-group">
                 <a href="/Articles/edit/@Model.Id" class="btn btn-primary">수정</a>
-                <a href="/Articles/Delete/@Model.Id" class="btn btn-danger">삭제</a>
+                <button @onclick="btnDelete_Click" class="btn btn-danger">삭제</button>
                 <a href="/Articles" class="btn btn-secondary">취소</a>
             </div>
         </div>
     </div>
 </div>
 
+<Delete Container="_container" OnChanged="@(() => Manager.NavigateTo("/Articles"))"/>
+
 @code {
     [Parameter]
     public int Id { get; set; }
     [Inject]
     public ArticleAppDbContext DbContext { get; set; }
+    [Inject]
+    public NavigationManager Manager { get; set; }
+
+    private DeleteModalParameterContainer _container = new();
 
     private Article Model = new();
 
     protected override async Task OnInitializedAsync()
     {
         Model = await DbContext.Articles.FindAsync(Id);
+    }
+
+    protected void btnDelete_Click()
+    {
+        _container.IsDeleteModalOpen = true;
+        _container.Model = Model;
     }
 }

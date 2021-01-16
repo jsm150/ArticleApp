@@ -33,23 +33,33 @@ else
                 <td>
                     <a href="/Articles/Details/@article.Id" class="btn btn-light">Details</a>
                     <a href="/Articles/Edit/@article.Id" class="btn btn-light">Edit</a>
-                    <a href="/Articles/Delete/@article.Id" class="btn btn-light">Delete</a>
+                    <input type="button" value="Delete" class="btn btn-danger" 
+                           @onclick="() => btnDelete_Click(article)"/>
                 </td>
             </tr>
             }
         </tbody>
     </table>
 }
+<Delete Container="_container" OnChanged="OnInitializedAsync"></Delete>
 
 @code {
 
     [Inject]
     public ArticleAppDbContext DbContext { get; set; }
 
+    private DeleteModalParameterContainer _container = new();
+
     private List<Article> _articles;
 
     protected override async Task OnInitializedAsync()
     {
         _articles = await DbContext.Articles.ToListAsync();
+    }
+
+    protected void btnDelete_Click(Article model)
+    {
+        _container.IsDeleteModalOpen = true;
+        _container.Model = model;
     }
 }

@@ -1,36 +1,32 @@
-﻿@page "/Articles/Delete/{Id:int}"
-
-<h3>Delete</h3>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <EditForm Model="Model">
-                <DataAnnotationsValidator /><ValidationSummary />
-                <div class="form-group">
-                    <label for="Title">Title</label>
-                    <InputText id="Title" class="form-control" placeholder="Enter Title" @bind-Value="Model.Title" />
-                    <ValidationMessage For="() => Model.Title" class="form-text text-muted" />
-                </div>
-                <button type="submit" class="btn btn-primary">등록</button>
-                <a href="/Articles" class="btn btn-secondary">취소</a>
-            </EditForm>
-        </div>
-    </div>
-</div>
+﻿@if (Container.Model != null)
+{
+    <MatDialog @bind-IsOpen="@Container.IsDeleteModalOpen">
+        <MatDialogTitle>@(Container.Model.Id)번 게시물</MatDialogTitle>
+        <MatDialogContent>
+            <p>정말로 삭제하시겠습니까??</p>
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@(() => Container.IsDeleteModalOpen = false)">취소</MatButton>
+            <MatButton OnClick="@btnDelete_Click">삭제</MatButton>
+        </MatDialogActions>
+    </MatDialog>
+}
 
 @code {
     [Parameter]
-    public int Id { get; set; }
-    [Inject]
-    public NavigationManager Navigation { get; set; }
+    public DeleteModalParameterContainer Container { get; set; }
+
     [Inject]
     public ArticleAppDbContext DbContext { get; set; }
 
-    private Article Model = new();
+    [Parameter]
+    public EventCallback OnChanged { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected async Task btnDelete_Click()
     {
-        Model = await DbContext.Articles.FindAsync(Id);
+        Container.IsDeleteModalOpen = false;
+        DbContext.Articles.Remove(Container.Model);
+        await DbContext.SaveChangesAsync();
+        await OnChanged.InvokeAsync();
     }
 }
