@@ -2,6 +2,35 @@
 
 <h3>Create</h3>
 
-@code {
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <EditForm Model="Model" OnValidSubmit="btnSubmit_Click">
+                <DataAnnotationsValidator /><ValidationSummary />
+                <div class="form-group">
+                    <label for="Title">Title</label>
+                    <InputText id="Title" class="form-control" placeholder="Enter Title" @bind-Value="Model.Title"/>
+                    <ValidationMessage For="() => Model.Title" class="form-text text-muted" />
+                </div>
+                <button type="submit" class="btn btn-primary">등록</button>
+                <a href="/Articles" class="btn btn-secondary">취소</a>
+            </EditForm>
+        </div>
+    </div>
+</div>
 
+@code {
+    [Inject]
+    public NavigationManager Navigation { get; set; }
+    [Inject]
+    public ArticleAppDbContext DbContext { get; set; }
+
+    private Article Model = new();
+
+    protected void btnSubmit_Click()
+    {
+        DbContext.Articles.Add(Model);
+        DbContext.SaveChanges();
+        Navigation.NavigateTo("/Articles");
+    }
 }
