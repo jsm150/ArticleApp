@@ -19,7 +19,12 @@ namespace ArticleApp.Pages.Articles.Containers
 
         public void OnClick(int idx)
         {
-            PageIndex = idx > ButtonEndIdx ? ButtonEndIdx : idx;
+            PageIndex = idx switch
+            {
+                var i when i > ButtonEndIdx => ButtonEndIdx,
+                var i when i < 0 => 0,
+                _ => idx
+            };
             OnChanged?.Invoke();
         }
     }

@@ -10,8 +10,10 @@
         {
             if (i > Pager.ButtonEndIdx) break;
             var save = i;
-            <li class="page-item">
-                <button class="page-link" @onclick="() => Pager.OnClick(save)">@(i + 1)</button>
+            <li class="page-item @(i == Pager.PageIndex ? "active" : null)">
+                <button class="page-link" @onclick="() => Pager.OnClick(save)">
+                    @(i + 1)
+                </button>
             </li>
         }
         <li class="page-item">
