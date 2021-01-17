@@ -11,17 +11,23 @@
                 <label for="id">ID: </label> @_model.Id
             </div>
             <div class="form-group">
+                <label for="Created">Created: </label> @_model.Created
+            </div>
+            <div class="form-group">
+                <label for="Modified">Modified: </label> @_model.Modified
+            </div>
+            <div class="form-group">
                 <label for="title">Title: </label> @_model.Title
             </div>
             <div class="form-group">
-                <label for="title">Content: </label> 
                 <hr />
+                <label for="title">Content: </label>
                 @_model.Content
             </div>
             <div class="form-group">
                 <a href="/Articles/edit/@_model.Id" class="btn btn-primary">수정</a>
                 <button @onclick="btnDelete_Click" class="btn btn-danger">삭제</button>
-                <a href="/Articles" class="btn btn-secondary">취소</a>
+                <a href="/Articles" class="btn btn-secondary">확인</a>
             </div>
         </div>
     </div>

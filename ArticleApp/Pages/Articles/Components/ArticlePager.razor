@@ -1,5 +1,28 @@
-﻿<h3>ArticlePager</h3>
+﻿<nav aria-label="">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <button class="page-link @(Pager.ButtonFirstIdx == 0 ? "disabled" : null)" aria-label="Previous" 
+                    @onclick="() => Pager.OnClick(Pager.ButtonFirstIdx - 1)">
+                <span aria-hidden="true">&laquo;</span>
+            </button>
+        </li>
+        @for (int i = Pager.ButtonFirstIdx; i <= Pager.ButtonLastIdx; i++)
+        {
+            if (i > Pager.ButtonEndIdx) break;
+            var save = i;
+            <li class="page-item">
+                <button class="page-link" @onclick="() => Pager.OnClick(save)">@(i + 1)</button>
+            </li>
+        }
+        <li class="page-item">
+            <button class="page-link disabled" aria-label="Next" @onclick="() => Pager.OnClick(Pager.ButtonLastIdx + 1)">
+                <span aria-hidden="true">&raquo;</span>
+            </button>
+        </li>
+    </ul>
+</nav>
 
 @code {
-
+    [Parameter]
+    public Pagination Pager { get; set; }
 }

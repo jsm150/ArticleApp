@@ -41,6 +41,7 @@
 
     protected void btnEdit_Click()
     {
+        Model.Modified = DateTime.Now;
         DbContext.SaveChanges();
         Navigation.NavigateTo($"/Articles/Details/{Id}");
     }
