@@ -9,6 +9,7 @@
     </MatDialogActions>
 </MatDialog>
 
+
 @code {
     [Inject]
     public ArticleAppDbContext DbContext { get; set; }
@@ -24,7 +25,6 @@
     protected async Task btnDelete_Click()
     {
         DbContext.Articles.Remove(Model);
-        Model = new();
         await DbContext.SaveChangesAsync();
         await OnChanged.InvokeAsync();
     }

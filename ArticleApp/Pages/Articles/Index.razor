@@ -63,12 +63,12 @@ else
 
     protected async Task Setting()
     {
+        _deleteModel = new();
         Pager.DataCount = await DbContext.Articles.CountAsync();
         var skip = Pager.PageSize * Pager.PageIndex;
         _articles = await DbContext.Articles.OrderByDescending(t => t.Created)
             .Skip(skip).Take(Pager.PageSize).ToListAsync();
         StateHasChanged();
-        _deleteModel = new();
     }
 
     protected override async Task OnInitializedAsync()

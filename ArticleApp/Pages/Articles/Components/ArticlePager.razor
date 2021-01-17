@@ -1,7 +1,7 @@
 ﻿<nav aria-label="">
     <ul class="pagination justify-content-center">
         <li class="page-item">
-            <button class="page-link @(Pager.ButtonFirstIdx == 0 ? "disabled" : null)" aria-label="Previous" 
+            <button class="page-link" aria-label="Previous" 
                     @onclick="() => Pager.OnClick(Pager.ButtonFirstIdx - 1)">
                 <span aria-hidden="true">&laquo;</span>
             </button>
@@ -15,7 +15,7 @@
             </li>
         }
         <li class="page-item">
-            <button class="page-link disabled" aria-label="Next" @onclick="() => Pager.OnClick(Pager.ButtonLastIdx + 1)">
+            <button class="page-link" aria-label="Next" @onclick="() => Pager.OnClick(Pager.ButtonLastIdx + 1)">
                 <span aria-hidden="true">&raquo;</span>
             </button>
         </li>
