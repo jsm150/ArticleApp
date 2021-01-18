@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleApp", "ArticleApp\Ar
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ArticleApp.SqlServer", "ArticleApp.SqlServer\ArticleApp.SqlServer.sqlproj", "{ED32B67D-4EB3-4E20-B655-E72BC4585722}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleApp.Models.Tests", "ArticleApp.Models.Tests\ArticleApp.Models.Tests.csproj", "{32E5C8D8-5967-45A0-934B-C87027304253}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,10 +23,6 @@ Global
 		{ED32B67D-4EB3-4E20-B655-E72BC4585722}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED32B67D-4EB3-4E20-B655-E72BC4585722}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED32B67D-4EB3-4E20-B655-E72BC4585722}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{32E5C8D8-5967-45A0-934B-C87027304253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{32E5C8D8-5967-45A0-934B-C87027304253}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32E5C8D8-5967-45A0-934B-C87027304253}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{32E5C8D8-5967-45A0-934B-C87027304253}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

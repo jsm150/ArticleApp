@@ -64,6 +64,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ArticleApp.SqlServer.publish.xml" />
-    <None Include="ArticleApp_1.SqlServer.publish.xml" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,31 @@
+﻿<MatDialog @bind-IsOpen="IsSetPinModalOpen">
+    <MatDialogTitle>@(Model.Id)번 게시물</MatDialogTitle>
+    <MatDialogContent>
+        <p>@(Model.Id)번 게시물을 공지글로 설정하시겠습니까?</p>
+    </MatDialogContent>
+    <MatDialogActions>
+        <MatButton OnClick="@(() => Model = new())">취소</MatButton>
+        <MatButton OnClick="@btnSave_Click">설정</MatButton>
+    </MatDialogActions>
+</MatDialog>
+
+
+@code {
+    [Inject]
+    public ArticleAppDbContext DbContext { get; set; }
+
+    [Parameter]
+    public Article Model { get; set; }
+
+    [Parameter]
+    public EventCallback OnChanged { get; set; }
+
+    private bool IsSetPinModalOpen { get => Model.Id != 0; set => _ = value; }
+
+    protected async Task btnSave_Click()
+    {
+        Model.IsPinned = true;
+        await DbContext.SaveChangesAsync();
+        await OnChanged.InvokeAsync();
+    }
+}

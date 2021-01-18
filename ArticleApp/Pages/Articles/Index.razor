@@ -6,6 +6,16 @@
 
 <div>
     <a href="/Articles/Create" class="btn btn-primary">Create</a>
+    <AuthorizeView>
+        <Authorized>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Articles/Manage" class="btn btn-secondary">Manage</a>
+        </NotAuthorized>
+    </AuthorizeView>
+    <AuthorizeView Roles="Administrators, Managers">
+        <a href="/Articles/Manage" class="btn btn-secondary">Manage</a>
+    </AuthorizeView>
 </div>
 
 @if (_articles == null)
@@ -43,7 +53,7 @@ else
 }
 
 <ArticleApp.Pages.Articles.Components.ArticlePager Pager="Pager" />
-<Delete Model="_deleteModel" OnChanged="Setting"></Delete>
+<ArticleDeleteModal Model="_deleteModel" OnChanged="Setting" />
 
 @implements IDisposable
 @code {
@@ -53,8 +63,8 @@ else
 
     public Pagination Pager { get; } = new()
     {
-        PageSize = 2,
-        ButtonSize = 3,
+        PageSize = 5,
+        ButtonSize = 5,
     };
 
     private Article _deleteModel = new();

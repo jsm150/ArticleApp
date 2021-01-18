@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<Delete Model="_deleteModel" OnChanged="@(() => Manager.NavigateTo("/Articles"))"/>
+<ArticleDeleteModal Model="_deleteModel" OnChanged="@(() => Manager.NavigateTo("/Articles"))"/>
 
 @code {
     [Parameter]

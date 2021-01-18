@@ -1,7 +1,104 @@
-﻿@page "/Articles/Manage"
+﻿@page "/Articles/manage"
+
 
 <h3>Manage</h3>
 
-@code {
+<div>
+    <a href="/Articles/Create" class="btn btn-primary">Create</a>
+</div>
 
+@if (_articles == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Created</th>
+                <th>공지</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in _articles)
+            {
+                <tr>
+                    <td>@article.Id</td>
+                    <td>@article.Title</td>
+                    <td>@article.Created</td>
+                    <td>@(article.IsPinned ? "공지" : null)</td>
+                    <td>
+                        <a href="/Articles/Details/@article.Id" class="btn btn-light">Details</a>
+                        <a href="/Articles/Edit/@article.Id" class="btn btn-light">Edit</a>
+                        <input type="button" value="Delete" class="btn btn-danger"
+                               @onclick="() => btnDelete_Click(article)" />
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-info" value="공지글로 올리기"
+                               @onclick="() => btnModelPinned_Click(article)"/>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<ArticlePager Pager="Pager" />
+<ArticleDeleteModal Model="_deleteModel" OnChanged="Setting" />
+<ArticleSetPinModal Model="_announcementModel" OnChanged="Setting"/>
+
+@implements IDisposable
+@code {
+    [Inject]
+    public ArticleAppDbContext DbContext { get; set; }
+
+    public Pagination Pager { get; } = new()
+    {
+        PageSize = 5,
+        ButtonSize = 10,
+    };
+
+    private List<Article> _articles;
+
+    private Article _announcementModel = new();
+
+    private Article _deleteModel = new();
+
+    protected async Task Setting()
+    {
+        _announcementModel = new();
+        _deleteModel = new();
+        Pager.DataCount = await DbContext.Articles.CountAsync();
+        var skip = Pager.PageSize * Pager.PageIndex;
+        _articles = await DbContext.Articles.OrderBy(t => !t.IsPinned)
+            .ThenByDescending(t => t.Created)
+            .Skip(skip).Take(Pager.PageSize).ToListAsync();
+        StateHasChanged();
+    }
+
+    protected void btnModelPinned_Click(Article model)
+    {
+        _announcementModel = model;
+    }
+
+    protected void btnDelete_Click(Article model)
+    {
+        _deleteModel = model;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Pager.OnChanged += Setting;
+        await Setting();
+    }
+
+    public void Dispose()
+    {
+        Pager.OnChanged -= Setting;
+    }
 }
